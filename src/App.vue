@@ -1,42 +1,103 @@
 <template>
   <div id="app">
     <app-header />
-    <Home />
-    <Menu />
+    <router-view></router-view>
+    <div class="info_block_wrapper">
+      <router-view name='ordering-guide'></router-view>
+      <router-view name='delivery'></router-view>
+      <router-view name='history'></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
-import Home from './components/Home'
-import Menu from './components/Menu'
 
 export default {
   name: 'app',
   components: {
-    appHeader: Header,
-    Home,
-    Menu
+    appHeader: Header
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Nunito', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  //text-align: center;
-  color: #2c3e50;
+
+body {
+  font-family: 'Crimson Text', 'selif';
+  margin: 0;
+  font-size: 1.5em;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 10px 0;
+  background: #f1e6da;
+}
+
+li {
+  list-style: none;
+}
+
+span {
+  margin: 0 5px;
+}
+
+.info_block_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.info_block {
+  background: #f1e6da;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.info_block h3 {
+  text-align: center;
+}
+
+.info_block_content {
+  display: flex;
+  align-items: center;
+}
+
+.info_block img {
+  width: 30%;
+}
+
+@media screen and (min-width: 900px){
+  .info_block {
+    width: 100%;
+  }
+
+  .info_block_wrapper {
+    flex-direction: row;
+  }
+
+  .info_block:nth-child(2) {
+     margin: 10px;
+  }
+
+  .info_block_content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info_block img {
+    max-width: 100%;
+  }
+
+  .info_block:nth-child(2) img {
+    order: -1;
   }
 }
 </style>

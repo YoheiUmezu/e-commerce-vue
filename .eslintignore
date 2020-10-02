@@ -11,3 +11,4 @@ src/sections
 src/sectionsAdmin
 src/mixins
 src/selfonboarding
+src/firebase.js

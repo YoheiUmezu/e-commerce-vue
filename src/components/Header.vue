@@ -7,22 +7,22 @@
             </div>
             <nav>
                 <ul>
-                    <li>
-                        <a href="">home</a>
-                    </li>
+                    <router-link :to="{ name: 'homeLink' }" tag="li">
+                        <a href="">Home</a>
+                    </router-link>
+                    <!-- <a href="">home</a> -->
                     <span>~</span>
-                    <li>
-                        <a href="/menu">menu</a>
-                    </li>
+                        <router-link :to="{ name: 'menuLink' }" tag="li">
+                            <a href="">menu</a>
+                        </router-link>
                     <span>~</span>
-                    <li>
-                        <a href="/contact">contact us</a>
-                    </li>
+                        <router-link :to="{ name: 'contactLink' }" tag="li">
+                            <a href="">Contact us </a>
+                        </router-link>
                     <span>~</span>
-                    <li>
-                        <a href="/about">about us</a>
-                    </li>
-                    <span>~</span>
+                        <router-link :to="{ name: 'aboutLink' }" tag="li">
+                            <a href="">About us </a>
+                        </router-link>
                 </ul>
             </nav>
         </header>
@@ -32,7 +32,7 @@
 <script>
 
     export default {
-        name: "appHeader"
+        name: "appHeader",
     }
 </script>
 

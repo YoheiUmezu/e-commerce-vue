@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <div class="nmenu_wrapper">
+    <div class="nmenu_wrapper">
+       
             <!---menu--->
+
+            <!-- {{ $route.params.items }} -->
+
             <div class="menu">
                 <h3>~ Authentic handmade pizza ~</h3>
                 <table v-for="item in getMenuItems" :key="item.name">
@@ -26,7 +29,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        
         <!---shopping basket---->
         <div class="basket">
             <h3>~ Basket ~</h3>
@@ -35,9 +38,9 @@
                 <tbody v-for="(item, index) in basket" :key="index">
                     <tr>
                         <td>
-                            <button class="btn_green">&#8722;</button>
+                            <button class="btn_green" @click="decreaseQuantity(item)">&#8722;</button>
                             <span>{{ item.quantity }}</span>
-                            <button class="btn_green">&#43;</button>
+                            <button class="btn_green" @click="increaseQuantity(item)">&#43;</button>
                         </td>
                         <td>{{ item.name }} {{ item.size }}"</td>
                         <td>${{ item.price * item.quantity }}</td>
@@ -45,58 +48,36 @@
                 </tbody>
             </table>
             <p>Order Total:</p>
-            <button class="btn_green">Place Order </button>
+            <button class="btn_green" @click="addNewOrder">Place Order </button>
             </div>
             <div class="" v-else>
-                {{ basketText }}
+                <p>{{ basketText }}</p>
+                <!-- {{ this.$store.state.orders }} -->
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
     export default {
         data () {
             return {
                 basket: [],
                 basketText: 'Your basket is empty.',
-                getMenuItems: {
-                    1: {
-                    'name': 'Margherita',
-                    'description': 'A delicious tomato based pizza topped with mozzarella',
-                    'options': [{
-                        'size': 9,
-                        'price': 6.95
-                    }, {
-                        'size': 12,
-                        'price': 10.95
-                    }]
-                    },
-                    2: {
-                    'name': 'Pepperoni',
-                    'description': 'A delicious tomato based pizza topped with mozzarella and pepperoni',
-                    'options': [{
-                        'size': 9,
-                        'price': 7.95
-                    }, {
-                        'size': 12,
-                        'price': 12.95
-                    }]
-                    },
-                    3: {
-                    'name': 'Ham and Pineapple',
-                    'description': 'A delicious tomato based pizza topped with mozzarella, ham and pineapple',
-                    'options': [{
-                        'size': 9,
-                        'price': 7.95
-                    }, {
-                        'size': 12,
-                        'price': 12.95
-                    }]
-                    }
-
-                }
             }
+        },
+        computed: {
+            ...mapGetters([
+                'getMenuItems'
+            ])
+            // getMenuItems() {
+            //     //stateにデータを取りに行く
+            //     //return this.$store.state.menuItems
+            //     return this.$store.getters.getMenuItems
+            // }
         },
         methods: {
 
@@ -115,6 +96,28 @@
                     size: option.size,
                     quantity: 1
                 })
+            },
+
+            removeFromBasket(item) {
+                this.basket.splice(this.basket.indexOf(item), 1)
+            },
+
+            increaseQuantity(item) {
+                item.quantity++
+            },
+
+            decreaseQuantity(item) {
+                item.quantity--
+                if(item.quantity === 0) {
+                    this.removeFromBasket(item)
+                }
+            },
+
+            addNewOrder() {
+                //mutations
+                this.$store.commit('addOrder', this.basket)//this.basket = payload
+                this.basket = []
+                this.basketText = 'Thank you, your orderhas been placed.'
             }
         }
     }

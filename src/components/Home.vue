@@ -5,7 +5,7 @@
                 <h2>Welcome to pizza planet</h2>
                 <img src="../assets/images/roller.png" alt="">
                 <h3>feeling hungry?</h3>
-                <button class="order_btn">Let's order</button>
+                <button class="order_btn" @click="goToMenu">Let's order</button>
             </div>
 
         </div>
@@ -14,7 +14,15 @@
 
 <script>
     export default {
-        name: 'home'
+        name: 'home',
+        methods: {
+            goToMenu() {
+                //一個前のリンクに戻る
+                // this.$router.go(-1)
+                // this.$router.replace({ name: "menuLink" })
+                this.$router.push({ name: "menuLink" })
+            }
+        }
     }
 </script>
 
